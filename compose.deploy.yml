@@ -1,0 +1,40 @@
+services:
+  maplog-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ${MAPLOG_WEB_ENV_FILE:-.env}
+    environment:
+      NODE_ENV: production
+      MAPLOG_SITE_URL: https://${MAPLOG_SITE_DOMAIN:?Maplog site domain is required}
+    networks:
+      - traefik_public_network
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_public_network"
+      - "traefik.http.routers.maplog-web-http.rule=Host(`${MAPLOG_SITE_DOMAIN:?Maplog site domain is required}`)"
+      - "traefik.http.routers.maplog-web-http.entrypoints=web"
+      - "traefik.http.routers.maplog-web-http.priority=10"
+      - "traefik.http.routers.maplog-web-http.middlewares=maplog-web-https-redirect"
+      - "traefik.http.middlewares.maplog-web-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.maplog-web-https-redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.maplog-web.rule=Host(`${MAPLOG_SITE_DOMAIN:?Maplog site domain is required}`)"
+      - "traefik.http.routers.maplog-web.entrypoints=websecure"
+      - "traefik.http.routers.maplog-web.priority=10"
+      - "traefik.http.routers.maplog-web.tls=true"
+      - "traefik.http.routers.maplog-web.tls.certresolver=myresolver"
+      - "traefik.http.routers.maplog-web.service=maplog-web"
+      - "traefik.http.services.maplog-web.loadbalancer.server.port=3000"
+
+networks:
+  traefik_public_network:
+    external: true
+    name: traefik_public_network
