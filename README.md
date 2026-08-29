@@ -2,7 +2,7 @@
 
 Maplog의 공개 랜딩 페이지를 제공하는 Next.js 프로젝트입니다.
 
-개인정보처리방침과 서비스 이용약관은 API가 아닌 Maplog 백엔드의 Thymeleaf SSR 템플릿이 각각 `/privacy`, `/terms`에서 직접 렌더링합니다.
+개인정보처리방침과 서비스 이용약관은 Maplog 백엔드의 Thymeleaf SSR 템플릿이 각각 `/privacy`, `/terms`에서 직접 렌더링합니다.
 
 ## Local development
 
@@ -14,7 +14,7 @@ npm run dev
 
 ## Production deployment
 
-이 프로젝트와 `maplog-be`는 같은 `maplog.millenniumrhino.com` 호스트를 사용합니다. 백엔드의 Traefik 규칙은 `/api`, `/actuator`, API 문서, `/privacy`, `/terms`를 처리하고, 나머지 경로는 이 프로젝트가 처리합니다.
+공개 랜딩은 `maplog.millenniumrhino.com`, API·Swagger·약관은 `api-maplog.millenniumrhino.com`으로 분리합니다. 이 프로젝트의 푸터 약관 링크는 `MAPLOG_API_URL`을 사용하며, 백엔드 OAuth 콜백도 API 도메인을 사용해야 합니다.
 
 ```bash
 cp .env.example .env
@@ -26,6 +26,7 @@ cp .env.example .env
 ## Required URLs
 
 - Landing: `https://maplog.millenniumrhino.com`
-- Privacy: `https://maplog.millenniumrhino.com/privacy`
-- Terms: `https://maplog.millenniumrhino.com/terms`
+- API / Swagger: `https://api-maplog.millenniumrhino.com/swagger-ui/index.html`
+- Privacy: `https://api-maplog.millenniumrhino.com/privacy`
+- Terms: `https://api-maplog.millenniumrhino.com/terms`
 # maplog-landingpage

@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { BrandLink, MaplogMark } from "@/components/brand";
+
+const apiUrl = process.env.MAPLOG_API_URL ?? "https://api-maplog.millenniumrhino.com";
 
 const notes = [
   ["01", "한 장면", "지금 이곳에서 눈에 들어온 것을 사진과 짧은 문장으로 남깁니다."],
@@ -63,8 +64,8 @@ export default function HomePage() {
       <footer className="site-footer">
         <BrandLink />
         <div className="footer-links">
-          <Link href="/privacy">개인정보처리방침</Link>
-          <Link href="/terms">서비스 이용약관</Link>
+          <a href={`${apiUrl}/privacy`}>개인정보처리방침</a>
+          <a href={`${apiUrl}/terms`}>서비스 이용약관</a>
         </div>
         <span>© {new Date().getFullYear()} Maplog</span>
       </footer>

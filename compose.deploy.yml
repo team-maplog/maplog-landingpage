@@ -3,12 +3,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        MAPLOG_API_URL: https://${MAPLOG_API_DOMAIN:?Maplog API domain is required}
     restart: unless-stopped
     env_file:
       - ${MAPLOG_WEB_ENV_FILE:-.env}
     environment:
       NODE_ENV: production
       MAPLOG_SITE_URL: https://${MAPLOG_SITE_DOMAIN:?Maplog site domain is required}
+      MAPLOG_API_URL: https://${MAPLOG_API_DOMAIN:?Maplog API domain is required}
     networks:
       - traefik_public_network
     healthcheck:

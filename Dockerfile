@@ -8,6 +8,8 @@ COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 
 FROM base AS builder
+ARG MAPLOG_API_URL=https://api-maplog.millenniumrhino.com
+ENV MAPLOG_API_URL=${MAPLOG_API_URL}
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
