@@ -5,86 +5,99 @@ const apiUrl = process.env.MAPLOG_API_URL ?? "https://api-maplog.millenniumrhino
 const appUrl = process.env.NEXT_PUBLIC_MAPLOG_APP_URL ?? "https://maplog.app";
 
 function ArrowIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 8h9M8.5 3.5 13 8l-4.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
-}
-
-function PlayIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 18 18" fill="none"><path d="m6.4 4.6 6.8 4.4-6.8 4.4V4.6Z" fill="currentColor" /></svg>;
+  return <svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
 function PinIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M19 10.4c0 5-7 10.1-7 10.1s-7-5.1-7-10.1a7 7 0 1 1 14 0Z" stroke="currentColor" strokeWidth="1.6" /><circle cx="12" cy="10.3" r="2.25" stroke="currentColor" strokeWidth="1.6" /></svg>;
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M18.6 10.1c0 4.7-6.6 9.7-6.6 9.7s-6.6-5-6.6-9.7a6.6 6.6 0 1 1 13.2 0Z" stroke="currentColor" strokeWidth="1.8" /><circle cx="12" cy="10.1" r="2.2" fill="currentColor" /></svg>;
+}
+
+function ReelsIcon() {
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><rect x="4" y="3.5" width="16" height="17" rx="4" stroke="currentColor" strokeWidth="1.7" /><path d="m4.8 8 4-4.5M10.5 8l4-4.5M16.2 8l3.6-4.1M10.2 11.1l4.7 2.9-4.7 2.9v-5.8Z" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
 function RouteIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="18" r="2.5" stroke="currentColor" strokeWidth="1.6" /><circle cx="18" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.6" /><path d="M7.8 16.3c2.9-2.2 1.6-5.7 4.5-7.8 1.3-.9 2.4-.7 3.4-.7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>;
+  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><circle cx="6.3" cy="17.6" r="2.3" stroke="currentColor" strokeWidth="1.7" /><circle cx="17.7" cy="6.4" r="2.3" stroke="currentColor" strokeWidth="1.7" /><path d="M8.1 16.1c3-1.3 2.5-5.6 5.2-7.1 1.1-.6 2-.7 2.4-.7" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>;
 }
 
-const journeySteps = [
-  ["01", "여행 영상을 봐요", "짧은 릴스 속 한 장면에서 다음 여행의 이유를 발견해요."],
-  ["02", "장소를 바로 확인해요", "화면에 연결된 장소를 누르면 지도 위 위치와 기록을 이어서 볼 수 있어요."],
-  ["03", "하루의 경로를 따라가요", "저장한 장면이 어떤 순서로 이어졌는지 한 번에 이해해요."],
+const benefits = [
+  { title: "릴스 탐색", description: "짧은 여행 로그를 보며 마음에 남는 장면을 발견해요.", Icon: ReelsIcon },
+  { title: "장소 확인", description: "영상에 기록된 장소를 지도 위에서 바로 확인해요.", Icon: PinIcon },
+  { title: "경로 기록", description: "저장한 순간을 이어 나만의 하루 경로를 남겨요.", Icon: RouteIcon },
 ];
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="landing-page">
       <section className="hero" id="top">
         <nav className="site-nav" aria-label="주 메뉴">
           <BrandLink />
-          <div className="nav-links"><a href="#how-it-works">이용 방법</a><a href="#experience">여행 미리보기</a></div>
+          <div className="nav-links">
+            <a href="#how-it-works">Maplog 소개</a>
+            <a href="#experience">여행 미리보기</a>
+          </div>
           <a className="nav-cta" href={appUrl} data-analytics-event="nav_open_app">앱 열기 <ArrowIcon /></a>
         </nav>
 
         <div className="hero-layout">
           <div className="hero-copy">
-            <p className="eyebrow"><span /> 여행 릴스와 지도를 함께</p>
-            <h1>한 편의 여행을<br /><em>장소와 경로까지</em><br />기억하세요.</h1>
-            <p className="hero-description">Maplog는 짧은 여행 영상을 실제 장소와 이동 경로에 연결합니다. 스쳐 지나간 장면이 다음 여행의 지도 한 조각이 됩니다.</p>
+            <p className="eyebrow"><span /> TRAVEL REELS × MAP</p>
+            <h1>영상 속 장면을<br /><em>지도 위의 기억으로.</em></h1>
+            <p className="hero-description">Maplog는 짧은 여행 영상에 장소와 이동 경로를 함께 기록해요. 스쳐 지나간 한 장면이 다음 여행의 출발점이 됩니다.</p>
             <div className="hero-actions">
-              <a className="button button-primary" href={appUrl} data-analytics-event="hero_open_app">앱에서 여행 시작하기 <ArrowIcon /></a>
-              <a className="button button-text" href="#experience" data-analytics-event="hero_preview_experience">여행 영상 둘러보기 <span>01:00</span></a>
+              <a className="button button-primary" href={appUrl} data-analytics-event="hero_open_app">Maplog 시작하기 <ArrowIcon /></a>
+              <a className="button button-secondary" href="#experience" data-analytics-event="hero_preview_experience">어떻게 기록되나요?</a>
             </div>
             <p className="hero-note"><RouteIcon /> 영상 한 편에 장소와 하루의 동선을 함께</p>
           </div>
 
-          <div className="hero-product" aria-label="Maplog 여행 영상과 지도 미리보기" role="img">
-            <div className="hero-reel">
-              <div className="reel-progress" aria-hidden="true"><i /><i /><i /></div>
-              <div className="reel-sky" /><div className="reel-sun" /><div className="reel-hill reel-hill-back" /><div className="reel-hill reel-hill-front" /><div className="reel-water" />
-              <div className="reel-copy"><span>제주 · 오전 7:12</span><strong>바다보다 먼저<br />깨어난 아침</strong></div>
-              <div className="reel-place"><PinIcon /><span>성산일출봉</span></div><div className="reel-play"><PlayIcon /></div>
+          <div className="hero-product" aria-label="Maplog 영상과 지도 기록 미리보기" role="img">
+            <article className="hero-phone">
+              <div className="phone-island" aria-hidden="true" />
+              <div className="phone-topline"><strong>추천</strong><span>팔로잉</span><span>제주도</span><span className="phone-search">⌕</span></div>
+              <div className="hero-reel">
+                <div className="reel-progress" aria-hidden="true"><i /><i /><i /></div>
+                <div className="hero-scene" aria-hidden="true"><span /><span /><span /><span /></div>
+                <div className="reel-heading"><span>제주 · 오전 7:12</span><strong>바다보다 먼저<br />깨어난 아침</strong></div>
+                <div className="reel-actions" aria-hidden="true"><i>♡</i><i>◌</i><i>⌁</i></div>
+                <div className="reel-location"><PinIcon /><span>성산일출봉</span><b>›</b></div>
+              </div>
+              <div className="phone-tabs" aria-hidden="true"><i>⌂</i><i>⌕</i><i>＋</i><i>⌖</i><i>◉</i></div>
+            </article>
+
+            <div className="hero-map-card" aria-hidden="true">
+              <div className="map-grid" />
+              <div className="map-water" />
+              <svg className="hero-route" viewBox="0 0 410 500" fill="none"><path d="M121 402c-29-61-20-113 22-145 43-32 80 5 101-41 18-39-13-74 26-114 27-27 57-17 73-59" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg>
+              <span className="map-dot map-dot-one" /><span className="map-dot map-dot-two" /><span className="map-dot map-dot-three" />
+              <div className="map-thumb map-thumb-one" /><div className="map-thumb map-thumb-two" /><div className="map-thumb map-thumb-three" />
+              <div className="map-bubble map-bubble-one">함덕해수욕장 <b>›</b></div>
+              <div className="map-bubble map-bubble-two">성산일출봉 <b>›</b></div>
+              <div className="map-summary"><div className="summary-thumb" /><div><span><PinIcon /> 성산일출봉</span><strong>제주의 시작을 여는<br />가장 작은 풍경</strong></div><b>›</b></div>
             </div>
-            <div className="hero-map-card">
-              <div className="hero-map-grid" />
-              <svg className="hero-route" viewBox="0 0 420 260" fill="none" aria-hidden="true"><path d="M44 207C96 176 87 110 151 121c59 10 59 76 122 45 37-18 31-89 103-111" stroke="currentColor" strokeWidth="4" strokeLinecap="round" /></svg>
-              <span className="hero-map-pin hero-map-pin-one" /><span className="hero-map-pin hero-map-pin-two" /><span className="hero-map-pin hero-map-pin-three" />
-              <div className="map-stat"><span>3개의 장소</span><strong>11.8 km</strong></div><p>하루의 여행 경로</p>
-            </div>
-            <div className="hero-float-note">영상에서 찾은<br /><strong>3개의 장소</strong></div>
           </div>
         </div>
-        <a className="scroll-cue" href="#how-it-works" aria-label="Maplog 이용 방법으로 이동"><span>아래로 내려 이용 방법 보기</span><i /></a>
+
+        <div className="benefit-list" aria-label="Maplog의 핵심 기능">
+          {benefits.map(({ title, description, Icon }) => <article className="benefit" key={title}><Icon /><div><h2>{title}</h2><p>{description}</p></div></article>)}
+        </div>
       </section>
 
       <section className="story-intro" id="how-it-works">
-        <div className="section-heading"><p className="eyebrow eyebrow-dark"><span /> MAPLOG를 쓰는 이유</p><h2>영상이 끝나도<br />여행은 <em>계속되니까.</em></h2></div>
-        <p className="section-lead">다른 여행자의 장면을 보며 마음에 남은 곳을 찾고, 어디인지 확인하고, 그날의 발걸음까지 따라가 보세요. Maplog는 영상과 지도 사이에 있던 빈칸을 채웁니다.</p>
-        <div className="journey-steps">
-          {journeySteps.map(([number, title, description]) => <article className="journey-step" key={number}><span className="step-number">{number}</span><div className="step-visual" aria-hidden="true"><i /><i /><i /></div><h3>{title}</h3><p>{description}</p></article>)}
+        <p className="eyebrow eyebrow-dark"><span /> REEL TO MAP</p>
+        <div className="story-heading"><h2>좋은 여행은<br /><em>좋은 장면에서 시작되니까.</em></h2><p>마음에 남는 순간을 저장하고, 그 장면이 머문 실제 장소를 확인하세요. Maplog가 여행의 영감을 다음 경로로 이어 줍니다.</p><a className="button button-primary" href={appUrl} data-analytics-event="story_open_app">앱에서 탐색하기 <ArrowIcon /></a></div>
+        <div className="story-flow" aria-label="여행 로그가 지도에 기록되는 과정">
+          <article className="flow-card flow-reel"><div className="flow-scene" aria-hidden="true"><span /><span /><span /></div><span>01</span><strong>마음에 드는 릴스를 발견하고</strong></article>
+          <article className="flow-card flow-place"><div className="flow-place-image" aria-hidden="true" /><div className="flow-place-sheet"><b>카페 용산</b><small>제주 서귀포시 안덕면</small><div><i>♡</i><i>⌖</i><i>↗</i></div></div><span>02</span><strong>장소를 확인한 뒤</strong></article>
+          <article className="flow-card flow-map"><div className="flow-map-art" aria-hidden="true"><i /><i /><i /><svg viewBox="0 0 168 203" fill="none"><path d="M30 169c16-42 3-62 36-77 31-14 39 17 58-18 12-22 4-49 27-62" stroke="currentColor" strokeWidth="4" strokeLinecap="round" /></svg></div><span>03</span><strong>나만의 여행 경로를 남겨요</strong></article>
         </div>
       </section>
 
       <MaplogExperience />
 
-      <section className="record-section">
-        <div className="record-visual" aria-hidden="true"><div className="record-stamp stamp-one">여행 중의<br />한 장면</div><div className="record-card record-card-back"><span>09:40</span><i /></div><div className="record-card record-card-front"><span>14:20</span><i /></div><div className="record-route"><RouteIcon /></div></div>
-        <div className="record-copy"><p className="eyebrow eyebrow-dark"><span /> 나만의 경로를 남겨요</p><h2>좋았던 순간을<br /><em>나만의 경로로.</em></h2><p>여행 후에는 짧은 영상과 장소를 엮어 한 편의 기록을 만들 수 있어요. 시간이 지나도 그날의 분위기와 발걸음을 함께 꺼내 보세요.</p><a className="text-cta" href={appUrl} data-analytics-event="record_open_app">내 여행 기록하기 <ArrowIcon /></a></div>
-      </section>
-
       <section className="closing" id="start">
-        <div className="closing-copy"><p className="eyebrow"><span /> 다음 여행의 시작</p><h2>다음에 머문 곳을<br /><em>지도로 남겨보세요.</em></h2><p>가볍게 보고, 정확히 찾고, 오래 기억하는 여행을 시작해요.</p><a className="button button-light" href={appUrl} data-analytics-event="closing_open_app">Maplog 앱 열기 <ArrowIcon /></a></div>
-        <div className="closing-route" aria-hidden="true"><svg viewBox="0 0 360 300" fill="none"><path d="M22 269C140 268 56 140 165 138c72-1 69 104 137 75 43-18 13-102 45-176" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg><span className="closing-pin closing-pin-one" /><span className="closing-pin closing-pin-two" /><span className="closing-pin closing-pin-three" /></div>
+        <div className="closing-landscape" aria-hidden="true"><span /><span /><span /></div>
+        <div className="closing-copy"><p className="eyebrow eyebrow-dark"><span /> MORE TRIPS, A BRIGHTER YOU</p><h2>지도를 따라,<br />더 많은 좋은 날이 기다리고 있어요.</h2><p>Maplog와 함께 여행의 다음 장면을 기록해 보세요.</p><a className="button button-ink" href={appUrl} data-analytics-event="closing_open_app">앱 열기 <ArrowIcon /></a></div>
       </section>
 
       <footer className="site-footer"><BrandLink /><p>여행 영상을 지도에 기록하세요.</p><div className="footer-links"><a href={`${apiUrl}/privacy`}>개인정보처리방침</a><a href={`${apiUrl}/terms`}>서비스 이용약관</a></div><span>© {new Date().getFullYear()} Maplog</span></footer>
