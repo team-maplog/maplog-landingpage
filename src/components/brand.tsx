@@ -14,7 +14,7 @@ export function BrandLink() {
   return (
     <Link className="brand" href="/" aria-label="Maplog 홈">
       <MaplogMark />
-      <span>maplog</span>
+      <span>Maplog</span>
     </Link>
   );
 }
