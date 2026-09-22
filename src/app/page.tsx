@@ -1,5 +1,5 @@
 import { AppScreenshot } from "@/components/app-screenshot";
-import { BrandLink } from "@/components/brand";
+import { BrandLink, MaplogMark } from "@/components/brand";
 import { MaplogExperience } from "@/components/maplog-experience";
 
 const apiUrl = process.env.MAPLOG_API_URL ?? "https://api-maplog.millenniumrhino.com";
@@ -30,6 +30,7 @@ const benefits = [
 export default function HomePage() {
   return (
     <main className="landing-page">
+      <a className="skip-link" href="#main-content">본문으로 건너뛰기</a>
       <section className="hero" id="top">
         <nav className="site-nav" aria-label="주 메뉴">
           <BrandLink />
@@ -40,26 +41,27 @@ export default function HomePage() {
           <a className="nav-cta" href={appUrl} data-analytics-event="nav_open_app">앱 다운로드 <ArrowIcon /></a>
         </nav>
 
-        <div className="hero-layout">
+        <div className="hero-layout" id="main-content" tabIndex={-1}>
           <div className="hero-copy">
-            <p className="eyebrow"><span /> TRAVEL REELS × MAP</p>
-            <h1>영상 속 장면을<br /><em>지도 위의 기억으로.</em></h1>
-            <p className="hero-description">Maplog는 짧은 여행 영상에 장소와 이동 경로를 함께 기록해요. 스쳐 지나간 한 장면이 다음 여행의 출발점이 됩니다.</p>
+            <p className="eyebrow"><span /> 순간과 장소를 잇는 여행 기록</p>
+            <h1>여행의 순간을,<br /><em>나만의 지도로.</em></h1>
+            <p className="hero-description">짧은 영상에 그날의 장소를 담아 보세요.
+              다시 보고 싶은 순간이 나만의 여행 지도가 됩니다.</p>
             <div className="hero-actions">
-              <a className="button button-primary" href={appUrl} data-analytics-event="hero_open_app">App Store에서 다운로드 <ArrowIcon /></a>
-              <a className="button button-secondary" href="#experience" data-analytics-event="hero_preview_experience">어떻게 기록되나요?</a>
+              <a className="button button-primary" href={appUrl} data-analytics-event="hero_open_app">앱 다운로드 <ArrowIcon /></a>
+              <a className="button button-secondary" href="#experience" data-analytics-event="hero_preview_experience">앱 둘러보기 <ArrowIcon /></a>
             </div>
-            <p className="hero-note"><RouteIcon /> 영상 한 편에 장소와 하루의 동선을 함께</p>
+            <p className="hero-note">iPhone에서 무료로 시작하세요</p>
           </div>
 
           <div className="hero-product" aria-label="Maplog 실제 앱 화면">
             <figure className="hero-phone">
-              <AppScreenshot name="reel" alt="포항의 바다와 노을을 담은 Maplog 여행 릴스 화면" priority sizes="(max-width: 760px) 48vw, 290px" />
-              <figcaption>순간을 담고</figcaption>
+              <AppScreenshot name="reel" alt="포항의 바다와 노을을 담은 Maplog 여행 릴스 화면" priority sizes="(max-width: 760px) 40vw, 240px" />
+              <figcaption>영상으로 담은 순간</figcaption>
             </figure>
             <figure className="hero-map-card">
-              <AppScreenshot name="explore" alt="포항과 경주 지도 위에 여행 영상과 관광 장소가 표시된 Maplog 탐색 화면" priority sizes="(max-width: 760px) 48vw, 290px" />
-              <figcaption>지도에서 발견해요</figcaption>
+              <AppScreenshot name="explore" alt="포항과 경주 지도 위에 여행 영상과 관광 장소가 표시된 Maplog 탐색 화면" priority sizes="(max-width: 760px) 40vw, 240px" />
+              <figcaption>지도에 남은 기억</figcaption>
             </figure>
           </div>
         </div>
@@ -69,21 +71,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="story-intro" id="how-it-works">
-        <p className="eyebrow eyebrow-dark"><span /> REEL TO MAP</p>
-        <div className="story-heading"><h2>좋은 여행은<br /><em>좋은 장면에서 시작되니까.</em></h2><p>마음에 남는 순간을 저장하고, 그 장면이 머문 실제 장소를 확인하세요. Maplog가 여행의 영감을 다음 경로로 이어 줍니다.</p><a className="button button-primary" href={appUrl} data-analytics-event="story_open_app">앱 다운로드 <ArrowIcon /></a></div>
+      <section className="story-intro" id="how-it-works" aria-labelledby="story-title">
+        <div className="section-heading">
+          <div><p className="eyebrow">기록하는 방법</p><h2 id="story-title">그날의 여행이<br />하나의 이야기로.</h2></div>
+          <p>영상을 꾸미고, 장소를 연결하고, 다시 꺼내 보세요.<br className="desktop-break" /> 여행을 기억하는 일이 조금 더 쉬워집니다.</p>
+        </div>
         <div className="story-flow" aria-label="여행을 기록하고 다시 보는 과정">
-          <article className="flow-card"><AppScreenshot name="editor" alt="여행 영상에 글자와 색상을 더하는 텍스트 편집 화면" sizes="(max-width: 760px) 29vw, 190px" /><span>01</span><strong>나만의 글을 더하고</strong></article>
-          <article className="flow-card"><AppScreenshot name="route" alt="방문한 장소를 번호와 경로로 연결한 지도 화면" sizes="(max-width: 760px) 29vw, 190px" /><span>02</span><strong>장소를 경로로 잇고</strong></article>
-          <article className="flow-card"><AppScreenshot name="playback" alt="지도에서 선택한 장소의 여행 영상을 다시 보는 화면" sizes="(max-width: 760px) 29vw, 190px" /><span>03</span><strong>그 순간을 다시 봐요</strong></article>
+          <article className="flow-card">
+            <div className="flow-copy"><span className="step-number">01</span><h3>순간에 내 말을 더해요</h3><p>글자와 색상으로 그날의 기분까지.</p></div>
+            <AppScreenshot name="editor" alt="여행 영상에 글자와 색상을 더하는 텍스트 편집 화면" sizes="(max-width: 760px) 40vw, 200px" />
+          </article>
+          <article className="flow-card">
+            <div className="flow-copy"><span className="step-number">02</span><h3>장소를 하나로 이어요</h3><p>다녀온 곳이 나만의 여행 경로로.</p></div>
+            <AppScreenshot name="route" alt="방문한 장소를 번호와 경로로 연결한 지도 화면" sizes="(max-width: 760px) 40vw, 200px" />
+          </article>
+          <article className="flow-card">
+            <div className="flow-copy"><span className="step-number">03</span><h3>그 장면을 다시 만나요</h3><p>지도 위 장소에서 꺼내 보는 여행.</p></div>
+            <AppScreenshot name="playback" alt="지도에서 선택한 장소의 여행 영상을 다시 보는 화면" sizes="(max-width: 760px) 40vw, 200px" />
+          </article>
         </div>
       </section>
 
       <MaplogExperience />
 
-      <section className="closing" id="start">
-        <div className="closing-screens" aria-hidden="true"><AppScreenshot name="home" alt="" sizes="240px" /><AppScreenshot name="explore" alt="" sizes="240px" /></div>
-        <div className="closing-copy"><p className="eyebrow eyebrow-dark"><span /> MORE TRIPS, A BRIGHTER YOU</p><h2>지도를 따라,<br />더 많은 좋은 날이 기다리고 있어요.</h2><p>Maplog와 함께 여행의 다음 장면을 기록해 보세요.</p><a className="button button-ink" href={appUrl} data-analytics-event="closing_open_app">앱 다운로드 <ArrowIcon /></a></div>
+      <section className="closing" id="start" aria-labelledby="closing-title">
+        <MaplogMark />
+        <div className="closing-copy"><p className="eyebrow">다음 여행도, Maplog</p><h2 id="closing-title">좋았던 순간을<br />오래 기억하는 방법.</h2><p>지금, 첫 번째 여행 기록을 남겨 보세요.</p><a className="button button-primary" href={appUrl} data-analytics-event="closing_open_app">앱 다운로드 <ArrowIcon /></a><span className="closing-note">App Store · iPhone</span></div>
       </section>
 
       <footer className="site-footer"><BrandLink /><p>여행 영상을 지도에 기록하세요.</p><div className="footer-links"><a href={`${apiUrl}/privacy`}>개인정보처리방침</a><a href={`${apiUrl}/terms`}>서비스 이용약관</a></div><span>© {new Date().getFullYear()} Maplog</span></footer>

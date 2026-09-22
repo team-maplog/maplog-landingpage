@@ -38,13 +38,14 @@ export function MaplogExperience() {
     <section className="experience-section" id="experience" aria-labelledby="experience-title">
       <div className="experience-heading">
         <p className="eyebrow"><span /> 여행 미리보기</p>
-        <h2 id="experience-title">보는 순간,<br /><em>지도의 한 점이 돼요.</em></h2>
-        <p>Maplog에서는 어떤 여행이 기다릴까요? 아래 기능을 선택해 실제 앱 화면을 둘러보세요.</p>
+        <h2 id="experience-title">기록 너머,<br />새로운 여행의 시작.</h2>
+        <p>마음에 드는 장소를 발견하고, 여행 이야기를 나눠요.
+          궁금한 기능을 눌러 실제 앱 화면을 살펴보세요.</p>
       </div>
       <div className="experience-tabs" role="group" aria-label="미리 볼 앱 기능">
         {previews.map((item, index) => (
           <button key={item.id} className={`experience-tab${activeIndex === index ? " is-active" : ""}`} type="button" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-controls="experience-panel">
-            <span>0{index + 1}</span><strong>{item.label}</strong><span aria-hidden="true">↗</span>
+            <strong>{item.label}</strong>
           </button>
         ))}
       </div>
@@ -57,7 +58,7 @@ export function MaplogExperience() {
         <div className="experience-screens">
           {preview.screens.map((screen) => (
             <figure key={screen.name}>
-              <AppScreenshot name={screen.name} alt={screen.alt} sizes="(max-width: 760px) 40vw, 260px" />
+              <AppScreenshot name={screen.name} alt={screen.alt} sizes="(max-width: 760px) 40vw, 240px" />
               <figcaption>{screen.caption}</figcaption>
             </figure>
           ))}
