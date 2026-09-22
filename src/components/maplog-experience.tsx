@@ -1,44 +1,68 @@
 "use client";
 
 import { useState } from "react";
+import { AppScreenshot } from "@/components/app-screenshot";
 
-type JourneyStop = { id: "market" | "walk" | "roof"; time: string; place: string; category: string; caption: string; routeNote: string };
-
-const stops: JourneyStop[] = [
-  { id: "market", time: "11:08", place: "성수연방", category: "성수 · 마켓", caption: "창문으로 들어온 빛이 오래 머문 테이블.", routeNote: "첫 번째 장면 · 도보 4분" },
-  { id: "walk", time: "13:26", place: "서울숲", category: "서울숲 · 공원", caption: "천천히 걷기 좋은 오후의 길.", routeNote: "두 번째 장면 · 도보 11분" },
-  { id: "roof", time: "18:42", place: "뚝섬한강공원", category: "뚝섬 · 한강", caption: "해가 지기 직전, 강이 가장 넓어 보이던 순간.", routeNote: "마지막 장면 · 자전거 18분" },
-];
-
-function PlayIcon({ paused }: { paused: boolean }) {
-  return paused ? <svg aria-hidden="true" viewBox="0 0 18 18" fill="none"><path d="m6.4 4.6 6.8 4.4-6.8 4.4V4.6Z" fill="currentColor" /></svg> : <svg aria-hidden="true" viewBox="0 0 18 18" fill="none"><path d="M6.5 5v8M11.5 5v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" /></svg>;
-}
-
-function PinIcon() {
-  return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M19 10.4c0 5-7 10.1-7 10.1s-7-5.1-7-10.1a7 7 0 1 1 14 0Z" stroke="currentColor" strokeWidth="1.6" /><circle cx="12" cy="10.3" r="2.25" stroke="currentColor" strokeWidth="1.6" /></svg>;
-}
+const previews = [
+  {
+    id: "discover", label: "여행 발견", title: "다음 여행의 시작을 찾아요.",
+    description: "홈에서 여행 영상과 즐길 거리를 만나고, 지도에서 주변 장소를 한눈에 살펴보세요.",
+    screens: [
+      { name: "home", alt: "추천 행사와 여행 영상이 함께 보이는 Maplog 홈 화면", caption: "여행의 영감을 만나는 홈" },
+      { name: "explore", alt: "여행 영상과 관광지를 지도 위에서 찾는 탐색 화면", caption: "주변을 한눈에 보는 지도" },
+    ],
+  },
+  {
+    id: "events", label: "즐길 거리", title: "가고 싶은 곳을 더 자세히.",
+    description: "관광과 행사 목록에서 새로운 즐길 거리를 찾고, 상세 화면에서 일정과 위치를 확인해요.",
+    screens: [
+      { name: "events", alt: "여러 지역의 행사와 축제가 나열된 관광 목록 화면", caption: "새로운 즐길 거리 찾기" },
+      { name: "event-detail", alt: "행사의 일정, 주소, 지도 보기와 길찾기가 있는 상세 화면", caption: "일정부터 길찾기까지" },
+    ],
+  },
+  {
+    id: "memories", label: "순간 나누기", title: "좋았던 순간을 함께 나눠요.",
+    description: "지도에서 여행 영상을 다시 보고, 댓글로 그 순간에 대한 이야기를 나눠 보세요.",
+    screens: [
+      { name: "playback", alt: "지도 위에서 여행 영상을 재생하는 Maplog 화면", caption: "장소에서 다시 만나는 순간" },
+      { name: "comments", alt: "여행 영상 아래에서 댓글을 읽고 작성하는 화면", caption: "댓글로 이어지는 이야기" },
+    ],
+  },
+] as const;
 
 export function MaplogExperience() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const activeStop = stops[activeIndex];
+  const preview = previews[activeIndex];
 
   return (
     <section className="experience-section" id="experience" aria-labelledby="experience-title">
-      <div className="experience-heading"><p className="eyebrow"><span /> 여행 미리보기</p><h2 id="experience-title">보는 순간,<br /><em>지도의 한 점이 돼요.</em></h2><p>장면이나 지도 위의 장소를 직접 선택해 보세요. 영상과 경로가 어떻게 연결되는지 미리 경험할 수 있어요.</p></div>
-      <div className="experience-stage">
-        <article className={`preview-reel preview-reel-${activeStop.id}${isPaused ? " is-paused" : ""}`} aria-label={`${activeStop.place} 여행 영상 미리보기`}>
-          <div className="preview-progress" aria-hidden="true"><i /><i /><i /></div><div className="preview-scene" aria-hidden="true"><span /><span /><span /><span /></div><div className="preview-topline"><span>첫째 날 · 성수</span><time>{activeStop.time}</time></div><div className="preview-caption"><span>{activeStop.category}</span><strong>{activeStop.caption}</strong></div>
-          <button className="preview-control" type="button" onClick={() => setIsPaused((value) => !value)} aria-pressed={!isPaused} aria-label={isPaused ? "영상 미리보기 재생" : "영상 미리보기 일시 정지"}><PlayIcon paused={isPaused} /></button><div className="preview-place"><PinIcon /><span>{activeStop.place}</span></div>
-        </article>
-        <div className="preview-map" aria-label="성수 하루 여행 경로">
-          <div className="preview-map-grid" aria-hidden="true" /><div className="preview-map-water" aria-hidden="true" /><svg className="preview-map-route" viewBox="0 0 560 480" fill="none" aria-hidden="true"><path d="M91 117c39 47 35 142 132 144 72 1 89-91 151-42 49 39 49 112 113 123" stroke="currentColor" strokeWidth="5" strokeLinecap="round" /></svg><p className="map-eyebrow">서울 · 2026.08.30</p><div className="map-readout"><span>3개의 장소</span><strong>{activeStop.routeNote}</strong></div>
-          {stops.map((stop, index) => <button key={stop.id} className={`route-marker route-marker-${stop.id}${activeIndex === index ? " is-active" : ""}`} type="button" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-label={`${stop.place} 장면 보기`}><span>{String(index + 1).padStart(2, "0")}</span><i /></button>)}
-          <div className={`map-place-card map-place-card-${activeStop.id}`}><span>{activeStop.category}</span><strong>{activeStop.place}</strong><p>{activeStop.routeNote}</p></div>
+      <div className="experience-heading">
+        <p className="eyebrow"><span /> 여행 미리보기</p>
+        <h2 id="experience-title">보는 순간,<br /><em>지도의 한 점이 돼요.</em></h2>
+        <p>Maplog에서는 어떤 여행이 기다릴까요? 아래 기능을 선택해 실제 앱 화면을 둘러보세요.</p>
+      </div>
+      <div className="experience-tabs" role="group" aria-label="미리 볼 앱 기능">
+        {previews.map((item, index) => (
+          <button key={item.id} className={`experience-tab${activeIndex === index ? " is-active" : ""}`} type="button" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-controls="experience-panel">
+            <span>0{index + 1}</span><strong>{item.label}</strong><span aria-hidden="true">↗</span>
+          </button>
+        ))}
+      </div>
+      <div className="experience-stage" id="experience-panel">
+        <div className="experience-copy" aria-live="polite" aria-atomic="true">
+          <span className="preview-label">{preview.label}</span>
+          <h3>{preview.title}</h3><p>{preview.description}</p>
+          <small>실제 앱 캡처 · 화면 속 콘텐츠는 촬영 시점 기준입니다.</small>
+        </div>
+        <div className="experience-screens">
+          {preview.screens.map((screen) => (
+            <figure key={screen.name}>
+              <AppScreenshot name={screen.name} alt={screen.alt} sizes="(max-width: 760px) 40vw, 260px" />
+              <figcaption>{screen.caption}</figcaption>
+            </figure>
+          ))}
         </div>
       </div>
-      <div className="experience-tabs" aria-label="여행 장면 선택">{stops.map((stop, index) => <button key={stop.id} className={`experience-tab${activeIndex === index ? " is-active" : ""}`} type="button" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index}><span>{String(index + 1).padStart(2, "0")}</span><strong>{stop.place}</strong><time>{stop.time}</time></button>)}</div>
-      <p className="sr-only" aria-live="polite">현재 선택된 장면: {activeStop.place}, {activeStop.routeNote}</p>
     </section>
   );
 }
